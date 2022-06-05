@@ -1,0 +1,49 @@
+{
+  "oneOf": [
+    {
+      "type": "object",
+      "purpose": "Defines a simple ballot type in which a user's ADA balance is used to inform their voting power.",
+      "properties": {
+        "Name": {
+          "enum": ["Simple"]
+        }
+      },
+      "required": ["Name"]
+    },
+    {
+      "type": "object",
+      "purpose": "Defines a ballot type in which a user's ADA balance which is delegted to a specific stake pool is used to inform their voting power.",
+      "properties": {
+        "Name": {
+          "enum": ["Delegated"]
+        },
+        "PoolId": {
+          "type": "string",
+          "maxLength": 64,
+          "purpose": "Require that voters be delegated to the specified pool ID (bech32)",
+          "example": "pool1fh4sh2telea0tfdy39h0drx6uq566yt9gf24edpz7335sclx39z"
+        }
+      },
+      "required": ["Name", "PoolId"]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "enum": ["PolicyId"]
+        },
+        "PolicyId": {
+          "type": "array",
+          "purpose": "Users need to have at least one token from any of the policy IDs. Votes count only once per token. Vote weight is determined by number of unique assets.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "purpose": "Policy ID that enables users with tokens to vote",
+            "example": "32f13cdaa51c1ea28221a9f656c498f1d05f7bda49d324d6ff0ad976"
+          }
+        }
+      },
+      "required": ["Name", "PolicyId"]
+    }
+  ]
+}

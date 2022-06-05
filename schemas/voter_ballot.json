@@ -1,0 +1,61 @@
+{
+    "type": "object",
+    "properties": {
+      "ObjectType": {
+        "enum": ["VoteBallot"],
+        "purpose": "Identify the type of object this is",
+        "example": "VoteBallot"
+      },
+      "ObjectVersion": {
+        "enum": ["1.0.0"],
+        "purpose": "Specify the specification version of the object for future reference and parsing"
+      },
+      "VoteId": {
+        "type": "string",
+        "maxLength": 64,
+        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+        "purpose": "Unique identifier (hash?) identifying the particular proposal this vote is for",
+        "example": "abc001ef"
+      },
+      "ProposalId": {
+        "type": "string",
+        "maxLength": 64,
+        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+        "purpose": "Unique identifier (hash?) identifying the particular proposal this vote is for",
+        "example": "abc001ef"
+      },
+      "Choices": {
+        "type": "array",
+        "purpose": "This array should contain information about their selections",
+        "items": {
+          "type": "object",
+          "properties": {
+            "QuestionId": {
+              "type": "string",
+              "maxLength": 64,
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "purpose": "Unique identifier for the question in the VoteOptions of the proposal",
+              "example": "abc012def"
+            },
+            "ChoiceId": {
+              "type": "string",
+              "maxLength": 64,
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+              "purpose": "Unique identifier for the choice in the VoteOptions of the proposal",
+              "example": "abc012def"
+            }
+          },
+          "required": [
+            "QuestionId",
+            "ChoiceId"
+        ]
+        }
+      }
+    },
+    "required": [
+        "ObjectType",
+        "VoteId",
+        "ProposalId",
+        "Choices"
+    ]
+  } 

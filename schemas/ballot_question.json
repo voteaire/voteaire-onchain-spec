@@ -1,0 +1,72 @@
+{
+  "type": "object",
+  "properties": {
+    "QuestionId": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "purpose": "A unique identifier to identify this question.",
+      "example": "cb7a70ad-007f-4ec2-9acb-298fb07f5db0"
+    },
+    "Question": {
+      "type": "array",
+      "purpose": "Long-format ballot question",
+      "items": {
+        "type": "string",
+        "maxLength": 64,
+        "purpose": "Question text broken into 64-character strings to accomodate the maximum string length"
+      },
+      "example": ["Do you think people should be allowed to put pineapple on pizza?"]
+    },
+    "Description": {
+      "type": "array",
+      "purpose": "Provide more in-depth description of the ballot proposal",
+      "items": {
+        "type": "string",
+        "purpose": "Description text broken into 64-character strings to accomodate the maximum string length"
+      },
+      "example": ["<LONG DESCRIPTION>"]
+    },
+    "ChoiceLimit": {
+      "type": "integer",
+      "purpose": "Define the maximum number of choices an individual may cast in a multiple-choice vote.",
+      "minimum": 1,
+      "example": 3
+    },
+    "Choices": {
+      "type": "array",
+      "purpose": "Provide the list of voting options for choice votes",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "ChoiceId": {
+            "type": "string",
+            "maxLength": 64,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "purpose": "A unique identifier to identify this vote option during vote casting.",
+            "example": "cb7a70ad-007f-4ec2-9acb-298fb07f5db0"
+          },
+          "Name": {
+            "type": "string",
+            "maxLength": 64,
+            "purpose": "Provide the name of the vote option",
+            "example": "Yes, Pineapple is awesome!"
+          },
+          "Description": {
+            "type": "array",
+            "purpose": "Provide more information about this vote option including any references",
+            "items": {
+                "type": "string",
+                "maxLength": 64,
+                "purpose": "Description text broken into 64-character strings to accomodate the maximum string length"
+            },
+            "example": "<LONG DESCRIPTION>"
+          }
+        },
+        "required": ["Name", "ChoiceId"]
+      }
+    }
+  },
+  "required": ["QuestionId", "Question","ChoiceLimit", "Choices"]
+}

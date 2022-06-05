@@ -1,0 +1,90 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "title": "BallotProposal",
+  "type": "object",
+  "properties": {
+    "ObjectType": {
+      "enum": ["BallotProposal"],
+      "purpose": "Identify the type of object this is",
+      "example": "BallotProposal"
+    },
+    "ObjectVersion": {
+      "enum": ["1.0.0"],
+      "purpose": "Specify the version of the object for future reference and parsing"
+    },
+    "NetworkId": {
+      "type": "string",
+      "maxLength": 64,
+      "purpose": "Identify the voting 'network' this proposal belongs to",
+      "example": "Voteaire"
+    },
+    "ProposalId": {
+      "type": "string",
+      "maxLength": 64,
+      "purpose": "Unique identifier (GUID) identifying this particular proposal",
+      "example": "52da18fb-64ec-4d00-9484-fdb0b67ef678",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "ProposalURL": {
+      "type": "string",
+      "maxLength": 64,
+      "purpose": "Provide a URL where more information about the proposal may live (maybe a forum for discussing pros and cons, etc)",
+      "example": "https://example.com"
+    },
+    "BallotType": {
+      "$ref": "ballot_type.json"
+    },
+    "Title": {
+      "type": "string",
+      "maxLength": 64,
+      "purpose": "The title of the ballot proposal",
+      "example": "Pineapple on pizza?"
+    },
+    "Description": {
+      "type": "array",
+      "purpose": "Provide more information about this proposal including any references",
+      "items": {
+          "type": "string",
+          "maxLength": 64,
+          "purpose": "Description text broken into 64-character strings to accomodate the maximum string length"
+      },
+      "example": "<LONG DESCRIPTION>"
+    },
+    "Questions": {
+      "type": "array",
+      "purpose": "Provide one or more ballot questions that voters will vote on.",
+      "minItems": 1,
+      "items": {
+        "$ref": "ballot_question.json"
+      }
+    },
+    "VoteStartEpoch": {
+      "type": "integer",
+      "purpose": "Specify the Epoch that voting will start. Voting will be enabled at the beginning of this epoch.",
+      "example": 213
+    },
+    "VoteEndEpoch": {
+      "type": "integer",
+      "purpose": "Specify the Epoch that voting will end. Voting will be enabled until the end of this epoch.",
+      "example": 215
+    },
+    "SnapshotEpoch": {
+      "type": "integer",
+      "purpose": "Define which epoch snapshot will be used for weighting voting power.",
+      "example": 247,
+      "default": 0
+    }
+  },
+  "required":[
+    "ObjectType",
+    "ObjectVersion",
+    "NetworkId",
+    "ProposalId",
+    "BallotType",
+    "Title",
+    "Questions",
+    "VoteStartEpoch",
+    "VoteEndEpoch",
+    "SnapshotEpoch" 
+  ]
+}

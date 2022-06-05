@@ -1,0 +1,43 @@
+{
+  "Title": "Trezor or Ledger",
+  "NetworkId": "Voteaire",
+  "Questions": [
+    {
+      "Choices": [
+        {
+          "Name": "Ledger",
+          "ChoiceId": "3a767936-eee1-43d0-818f-bbfc082cb470",
+          "Description": [
+            "Ledger nano s or nano x, doesn't matter"
+          ]
+        },
+        {
+          "Name": "Trezor",
+          "ChoiceId": "64bb325a-ca7d-41fa-b858-7178b238e9b6",
+          "Description": [
+            "of course we're only talking about the Model T, as it's the only",
+            " one supporting Cardano!"
+          ]
+        }
+      ],
+      "Question": [
+        "Which hardware wallet do you think is better?"
+      ],
+      "QuestionId": "46e96e51-f319-490c-944b-fe1dcf84809a",
+      "ChoiceLimit": 1,
+      "Description": []
+    }
+  ],
+  "BallotType": {
+    "Name": "Simple"
+  },
+  "ObjectType": "BallotProposal",
+  "ProposalId": "1c3f779c-c2c8-4140-ab2a-ee4b21b9e078",
+  "Description": [
+    "Both are great hardware wallets, which do you think is better?"
+  ],
+  "VoteEndEpoch": 208,
+  "ObjectVersion": "1.0.0",
+  "SnapshotEpoch": 209,
+  "VoteStartEpoch": 208
+}
