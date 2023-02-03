@@ -24,6 +24,7 @@ select
     json ->> 'VoteStartEpoch' as vote_start_epoch,
     json ->> 'VoteEndEpoch' as vote_end_epoch,
     json ->> 'SnapshotEpoch' as snapshot_epoch,
+	json ->> 'ObjectVersion' as version,
     json
 from tx_metadata tm
 where key = 1916
@@ -89,7 +90,7 @@ where key = 1916
 --  and tx info
 -------------------------------------------------------------
 
--- drop table voteaire_votes;
+-- drop view voteaire_votes;
 create or replace view voteaire_votes
 as
 select 
@@ -97,19 +98,21 @@ select
 	row_number() over (partition by proposal_id, stake_address order by block_no asc ) as vote_num
 	from (
 		select distinct
-		sa.view as stake_address, 
-		o.stake_address_id,
-		encode(tx.hash, 'hex') as tx_hash,
-		v.proposal_id,
-		v.vote_id,
-		v.question_id,
-		v.choice_id,
-		b.block_no
-	from voteaire_votes_raw v
+			sa.view as stake_address, 
+			o.stake_address_id,
+			encode(tx.hash, 'hex') as tx_hash,
+			v.proposal_id,
+			v.vote_id,
+			v.question_id,
+			v.choice_id,
+			b.block_no,
+			d.id as delegation_id
+		from voteaire_votes_raw v
 		--inner join proposals p on  v.proposal_id = p.proposal_id
-		inner join tx on v.tx_id = tx.id
-		inner join tx_in i on tx.id = i.tx_in_id
-		inner join tx_out o on o.tx_id = i.tx_out_id and i.tx_out_index = o.index
-		inner join stake_address sa on o.stake_address_id = sa.id
-		inner join block b on tx.block_id = b.id
+			inner join tx on v.tx_id = tx.id
+			inner join tx_in i on tx.id = i.tx_in_id
+			inner join tx_out o on o.tx_id = i.tx_out_id and i.tx_out_index = o.index
+			inner join stake_address sa on o.stake_address_id = sa.id
+			inner join block b on tx.block_id = b.id
+			left join delegation d on tx.id = d.tx_id
 ) a;

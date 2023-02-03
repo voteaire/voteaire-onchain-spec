@@ -9,7 +9,7 @@
       "example": "BallotProposal"
     },
     "ObjectVersion": {
-      "enum": ["1.0.0"],
+      "enum": ["1.0.1"],
       "purpose": "Specify the version of the object for future reference and parsing"
     },
     "NetworkId": {

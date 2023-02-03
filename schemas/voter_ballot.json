@@ -7,7 +7,7 @@
         "example": "VoteBallot"
       },
       "ObjectVersion": {
-        "enum": ["1.0.0"],
+        "enum": ["1.0.1"],
         "purpose": "Specify the specification version of the object for future reference and parsing"
       },
       "VoteId": {

@@ -31,5 +31,6 @@ from (
         ) s on s.stake_address_id = v.stake_address_id
     where v.proposal_id = 'c3e7e1cc-f5e1-4144-8a36-0da025c37d76' -- proposal_id
         and v.vote_num = 1 -- only take the first vote if they voted multiple times
+        and v.delegation_id is not null --ensure this was a delegation transaction to prove ownership of stake address
 ) a
 group by proposal_id, question, choice

@@ -10,10 +10,14 @@ Voteaire extends this basic concept, adding multiple ballot types, and an easy t
 
 JSON schemas are contained within the schemas directory and describe the format of the metadata stored on-chain. Voteaire uses the metadata key 1916 to store ballot proposals and votes. 1916 was selected as it was the first year in which women allowed to vote in Canada. 
 
+The Voteaire specification is versioned, and is currently at version 1.0.1.
+
 ## Vote Counting
 Before starting note that some conditions must be met for a vote to be valid. some of these are:
 * The wallet ***must be staked*** in order for votes to be valid.
 * If a user submits multiple votes, only the first one will count.
+* Vote must be submitted as part of a delegation transaction.
+    * Note: Voteaire will re-delegate to the same pool you are currently delegated to, so there will be no impact on your delegation status or your rewards.
 
 Voteaire offers three types of polls, the votes in each of these behave differently and are weighted depending on different factors, these are:
 
@@ -52,3 +56,13 @@ Now let’s  look at a similar case using a policy ID poll, in this case our vot
 ![example 3](assets/images/example2.png)
 
 In this case we are taking the snapshot ourselves, so as soon as we are finished we can start weighing and counting the votes.
+
+### Franken-Address Vulnerability 
+
+Cardano addresses are composed of two parts, a payment portion and a staking portion. Typically the staking portion and payment portion of an address are from the same wallet and controlled by the same person, however it’s possible to compose an address of a payment portion under your control, and a staking portion owned by somebody else. 
+
+The Franken-Address Vulnerability affects this platform because we weigh the votes using the ADA that a given stake address controls. So a malicious user may compose an address using someone else’s stake address who has a lot of ADA (or tokens) and vote using that address, since a simple transaction only requires a signature from the payment portion of an address. In this case they could unfairly change the result of an proposal by getting credit for ADA or tokens which they do not control. 
+
+In order to ensure security and guarantee that the person voting actually controls the stake key which is casing the vote, we have updated the specification to require that votes need to be attached to a delegation transaction instead of a normal payment transaction. Because a delegation transaction requires control of the stake address this ensures that the voter cannot misrepresent the amount of funds they control.
+
+The Voteaire application will look for the pool you are currently delegated to and re-delegate to that pool, and thus voting will not change your delegation status and will have no effect on rewards. Note, that you still must be delegated to a pool before casting a vote on the Voteaire platform.
