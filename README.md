@@ -27,6 +27,8 @@ Voteaire offers three types of polls, the votes in each of these behave differen
 
 3. **policyID:** This poll uses a specific policy ID to allow voting, the weight of the vote is based on the number of tokens (with matching policy ID) held by the voting wallet. Note that the specification allows for multiple policy ids, however the UI only supports single policy ids per vote currently.
 
+4. **MetadataPolicyID:** Similarly to **PolicyId** polls, it only considers tokens with a matching policy ID, however instead of getting the voting weight from the amount of tokens directly, it allows the proposer to specify a json path with `Field` and assign different possible metadata values to different weights. If `FieldsMap` is an empty object, then the field itself will be the weight.
+
 ## Voting period
 The voting period is the time during which voters can cast their votes, Voteaire uses the Cardano Epochs to establish the length of the voting periods, users can select the starting and ending epochs as they see fit.
 

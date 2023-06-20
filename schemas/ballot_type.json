@@ -21,7 +21,7 @@
           "type": "string",
           "maxLength": 64,
           "purpose": "Require that voters be delegated to the specified pool ID (bech32)",
-          "example": "pool1fh4sh2telea0tfdy39h0drx6uq566yt9gf24edpz7335sclx39z"
+          "example": "pool1qqqz9vlskay2gv3ec5pyck8c2tq9ty7dpfm60x8shvapguhcemt"
         }
       },
       "required": ["Name", "PoolId"]
@@ -39,11 +39,40 @@
           "items": {
             "type": "string",
             "purpose": "Policy ID that enables users with tokens to vote",
-            "example": "32f13cdaa51c1ea28221a9f656c498f1d05f7bda49d324d6ff0ad976"
+            "example": "881fefe3681d446f5c8e2cc52d049f663030"
           }
         }
       },
       "required": ["Name", "PolicyId"]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "enum": ["PolicyIdMetadata"]
+        },
+        "PolicyId": {
+          "type": "array",
+          "purpose": "Every token from one of this policy IDs will have its metadata parsed and used to determine the vote weight.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "purpose": "Policy ID that enables users with tokens to vote",
+            "example": "881fefe3681d446f5c8e2cc52d049f663030"
+          }
+        },
+        "Field": {
+          "type": "string",
+          "purpose": "The JSON path to the field that will be used to determine the vote weight.",
+          "example": "$.properties.rarity"
+        },
+        "FieldsMap": {
+          "type": "object",
+          "purpose": "Defines the weight of each value of the field. The key is the value of the field and the value is the weight. If the field is not present in the map, then the weight is 0.",
+          "additionalProperties": {"type": "integer"}
+        }
+      },
+      "required": ["Name", "PolicyId", "Field", "FieldsMap"]
     }
   ]
 }
